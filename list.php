@@ -1,9 +1,7 @@
-<html>
-    <head>
-        <title>List of Posts</title>
-    </head>
-    <body>
-        <h1>List of Posts</h1>
+<?php $title = "List of Posts" ?>
+
+<?php ob_start() ?>
+    <h1>
         <ul>
             <?php foreach ($posts as $post): ?>
             <li>
@@ -13,5 +11,6 @@
             </li>
             <?php endforeach; ?>
         </ul>
-    </body>
-</html>
+<?php $content = ob_get_clean() ?>
+        
+<?php include "base.php" ?>
