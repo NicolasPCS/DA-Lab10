@@ -1,34 +1,19 @@
-<html> 
-    <head> 
-        <?php 
-        $link = mysqli_connect("localhost", "root", "", "blog_db"); 
-        /* verificar la conexión */ 
-        if (mysqli_connect_errno()) { 
-            printf("Conexión fallida: %s\n", mysqli_connect_error()); 
-            exit(); 
-        } 
-        $consulta = "SELECT id, title from post"; 
-        ?> 
-        <meta charset="UTF-8"> 
-        <title>List of Post</title>
-    </head> 
-    <body> 
-        <h1>List of Post</h1> 
-        <ul> 
-            <?php 
-            if ($result = mysqli_query($link, $consulta)) { 
-                while($row = mysqli_fetch_assoc($result)):?> 
-            <li> 
-                <a href="/show.php?id=<?php echo $row['id']?>"> 
-                    <?php echo $row['title']?> 
-                </a> 
-            </li>
-            <?php endwhile; 
-            } 
-            mysqli_free_result($result); 
-            ?> 
-        </ul>
-    </body>
-</html>
-<?php
+<?php 
+// index.php
+
+$dbname = "blog_db";
+$link = mysqli_connect("localhost", "root", "", $dbname); 
+mysqli_select_db($link, $dbname);
+
+$consulta = "SELECT id, title from post";     
+$result = mysqli_query($link, $consulta);
+
+$posts = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $posts[] = $row;
+}
+
 mysqli_close($link);
+
+// incluye el c�digo HTML de la vista
+require "list.php";
